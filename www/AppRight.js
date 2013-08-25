@@ -9,14 +9,28 @@ window.onerror = function( msg, url, line ) {
     console.log("JSERROR:" + msg + "(" + url + ":" + line + ")");
 }
 
+function isAndroidDevice()
+{
+	var ua = navigator.userAgent.toLowerCase();
+	var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
+	if(isAndroid) {
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
 function sendNow()
 {
-	cordova.exec(dWsuccess,dWfailure,"AppRightPlugin","sendNow",["stam"]);
+	if (isAndroidDevice())
+		cordova.exec(dWsuccess,dWfailure,"AppRightPlugin","sendNow",["stam"]);
 }
 
 function reportException(errorMessage)
 {
-	cordova.exec(dWsuccess,dWfailure,"AppRightPlugin","reportException",[errorMessage]);
+	if (isAndroidDevice())
+		cordova.exec(dWsuccess,dWfailure,"AppRightPlugin","reportException",[errorMessage]);
 }
 
 function reportBug(message)
@@ -26,13 +40,15 @@ function reportBug(message)
 
 function addMarker(message)
 {
-	cordova.exec(dWsuccess,dWfailure,"AppRightPlugin","addMarker",[message]);
+	if (isAndroidDevice())
+		cordova.exec(dWsuccess,dWfailure,"AppRightPlugin","addMarker",[message]);
 }
 
 function setLocationTrackingState(state)
 {
-	alert("setLocationTrackingState:" + state);
-	cordova.exec(dWsuccess,dWfailure,"AppRightPlugin","setLocationTrackingState",[state]);
+//	alert("setLocationTrackingState:" + state);
+	if (isAndroidDevice())
+		cordova.exec(dWsuccess,dWfailure,"AppRightPlugin","setLocationTrackingState",[state]);
 }
 
 function dWsuccess(data)
